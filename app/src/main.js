@@ -1,23 +1,10 @@
-import $ from 'jquery';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Editor from './components/editor';
+import { createRoot } from 'react-dom/client';
 
-function getPageList() {
-    $("h1").remove();
-    $.get("./api", data => {
-        data.forEach(file => {
-            $("body").append(`<h1>${file}</h1>`)
-        })
-    }, "JSON");
-}
 
-getPageList();
+const container = document.getElementById('root')
+const root = createRoot(container);
+root.render(<Editor/>)
 
-$("button").on("click", () => {
-    $.post("./api/createNewPage.php", {
-        "name": $("input").val()
-    }, () => {
-        getPageList();
-    })
-    .fail(() => {
-        alert(`Page with that name already exists`)
-    })
-});
