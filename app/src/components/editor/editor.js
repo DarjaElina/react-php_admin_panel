@@ -29,12 +29,23 @@ export default class Editor extends Component {
             .catch(() => alert("Page with that name already exists"));
     }
 
+    deletePage(page) {
+        axios
+            .post("./api/deletePage.php", {"name": page})
+            .then(this.loadPageList())
+            .catch(() => alert("Page does not exists"));
+    }
+
     render() {
         const {pageList} = this.state;
 
         const pages = pageList.map((page, i) => {
             return (
-                <h1 key={i}>{page}</h1>
+                <h1 key={i}>{page}
+                <a
+                href="#"
+                onClick={() => this.deletePage(page)}>(x)</a>
+                </h1>
             )
         });
 
